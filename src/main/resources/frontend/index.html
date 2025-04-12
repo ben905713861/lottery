@@ -811,6 +811,9 @@
         <button type="button" class="btn btn-default btn-lg" data-toggle="modal" id="setTopicButton">
           Set Topics
         </button>
+        <button type="button" class="btn btn-default btn-lg" data-toggle="modal" onclick="clearSignList()">
+          clear signIn list
+        </button>
       </div>
     </div>
     <div class="modal fade" id="setTopicsModal" tabindex="-1" role="dialog" aria-labelledby="setTopicsModal" aria-hidden="true">
@@ -1169,5 +1172,11 @@
         dummy.style.borderRadius = destRadius;
       };
     });
+
+    function clearSignList() {
+      request('DELETE', '/signIn').then(data => {
+        alert('clear signIn list successfully');
+      });
+    }
   </script>
 </html>

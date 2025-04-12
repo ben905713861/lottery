@@ -89,7 +89,9 @@
   <script src="js/main.js"></script>
   <script>
     const avatarLink = 'https://api.dicebear.com/9.x/bottts-neutral/svg?seed=';
-    const avatarList = ['Adrian', 'Valentina', 'Kimberly', 'Brooklynn', 'Sara', 'Aidan', 'Aiden', 'George'];
+    const avatarList = ['Adrian', 'Valentina', 'Kimberly', 'Brooklynn', 'Sara', 'Aidan', 'Aiden', 'George',
+        'Robert', 'Alexander', 'Andrea', 'Jessica', 'Christopher', 'Liam', 'Mackenzie',
+        'Emery', 'Destiny', 'Easton', 'Ryan'];
     let randomAvatar;
 
     function changeAvatar() {
@@ -99,12 +101,13 @@
     changeAvatar();
 
     function signIn(form) {
+      form.querySelector('button').disabled = true;
       request('POST', '/signIn', {
         name: form.querySelector('input[name="name"]').value,
         icon: avatarLink + randomAvatar,
       }).then(data => {
         alert('签到成功');
-        window.history.go(-1);
+        window.close();
       });
     }
   </script>

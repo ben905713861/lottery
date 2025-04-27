@@ -1026,20 +1026,20 @@
 
       //topic
       $('#setTopicButton').on('click',function() {
-           const topics = (localStorage.getItem("topic") || "").split("|");
-           let topicListHtml = '';
+        request('GET', '/topic').then(topics => {
+          let topicListHtml = '';
            topics.forEach(topic=>{
               topicListHtml +=`<li class="list-group-item" style="display: flex">
                 <input type="text" class="form-control" placeholder="topic" aria-label="topic" aria-describedby="basic-addon1" value="${topic}">
                 <button class="btn btn-danger btn-circle">
-                   <span class="glyphicon glyphicon-minus"></span>
+                   <span class="glyphicocn glyphicon-minus"></span>
                 </button>
               </li>`
            });
-            $('#topicGroups').empty().append(topicListHtml);
-           $('#setTopicsModal').modal('show');
-      }
-      );
+          $('#topicGroups').empty().append(topicListHtml);
+          $('#setTopicsModal').modal('show');
+        });
+      });
       $('#addMore').on('click',function(){
         $('#topicGroups').append(`<li class="list-group-item" style="display: flex">
                 <input type="text" class="form-control" placeholder="topic" aria-label="topic" aria-describedby="basic-addon1">
@@ -1058,18 +1058,21 @@
             topics.push($(this).val());
           }
         });
-        localStorage.setItem('topic',topics.join("|"));
-        $('#setTopicsModal').modal('hide');
+        request('POST', '/topic', {
+          topicList: topics,
+        }).then(newpersonList => {
+          $('#setTopicsModal').modal('hide');
+        });
       });
       $("#topic").on("click", function () {
         let typingElement = $(".typing");
-        const topics = (localStorage.getItem("topic") || "").split("|");
-        let html = '';
-        topics.forEach(topic => {
-          html += '<li>' + topic + '</li>';
+        request('GET', '/topic').then(topics => {
+          let html = '';
+          topics.forEach(topic => {
+            html += '<li>' + topic + '</li>';
+          });
+          typingElement.html(html);
         });
-        typingElement.html(html );
-
       });
 
       $("#lottery").on("click", function () {
